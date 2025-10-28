@@ -19,16 +19,15 @@ jobs:
           # We need to parse both the payload and the secret to compare
           USERNAME=$(echo "$PAYLOAD_USER_DATA" | jq -r '.username')
           PASSWORD_HASH=$(echo "$PAYLOAD_USER_DATA" | jq -r '.passhash')
-          SECRET_JSON=$(echo "$API_USER_SECRET")
 
           # Check if the secret exists and contains the user
-          if [ -z "$SECRET_JSON" ]; then
-            echo "::error::API_USER_AUTH secret is not configured."
+          if [ -z "$USERNAME" ]; then
+            echo "::error::User is not configured."
             exit 1
           fi
 
           # Attempt to retrieve the password hash for the given username from the secret
-          STORED_HASH=$(echo "$SECRET_JSON" | jq -r --arg user "$USERNAME" '.[$user]')
+          STORED_HASH=$(echo "$USERNAME" | jq -r --arg user "$USERNAME" '.[$user]')
 
           if [ -z "$STORED_HASH" ] || [ "$STORED_HASH" != "$PASSWORD_HASH" ]; then
             echo "::error::Authentication failed for user: $USERNAME."
