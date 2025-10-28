@@ -1,0 +1,68 @@
+name: Testing API Dispatch
+
+on:
+  repository_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Authenticate user
+        id: authenticate
+        env:
+          PAYLOAD_USER_DATA: ${{ github.event.client_payload.data.user }}
+          API_USER_SECRET: ${{ secrets.API_USER_AUTH }}
+        run: |
+          # The secret stores a JSON string like '{"username": "passhash"}'
+          # We need to parse both the payload and the secret to compare
+          USERNAME=$(echo "$PAYLOAD_USER_DATA" | jq -r '.username')
+          PASSWORD_HASH=$(echo "$PAYLOAD_USER_DATA" | jq -r '.passhash')
+          SECRET_JSON=$(echo "$API_USER_SECRET")
+
+          # Check if the secret exists and contains the user
+          if [ -z "$SECRET_JSON" ]; then
+            echo "::error::API_USER_AUTH secret is not configured."
+            exit 1
+          fi
+
+          # Attempt to retrieve the password hash for the given username from the secret
+          STORED_HASH=$(echo "$SECRET_JSON" | jq -r --arg user "$USERNAME" '.[$user]')
+
+          if [ -z "$STORED_HASH" ] || [ "$STORED_HASH" != "$PASSWORD_HASH" ]; then
+            echo "::error::Authentication failed for user: $USERNAME."
+            exit 1
+          fi
+          
+          echo "Authentication successful for user: $USERNAME"
+
+      - name: Process 'set' request
+        id: process-set
+        if: startsWith(github.event.client_payload.set, '') && success()
+        run: |
+          TEAM_NUMBER=${{ github.event.client_payload.set }}
+          FIELDS_JSON=${{ toJSON(github.event.client_payload.fields) }}
+          # Example: write data to a file based on the payload
+          mkdir -p .data
+          echo "$FIELDS_JSON" > ".data/team_${TEAM_NUMBER}.json"
+
+      - name: Committing changes with rebase
+        id: push
+        if: steps.process-set.outcome == 'success'
+        continue-on-error: true
+        uses: benkaiser/rebase-commit-push@v1.1
+        with:
+          author_name: webpanel
+          author_email: webpanel
+
+      - name: Set final status
+        if: always()
+        run: |
+          if ${{ steps.push.outcome == 'success' }}; then
+              echo "Push was successful."
+          else
+              echo "Push failed after multiple retries."
+              exit 1
+          fi
