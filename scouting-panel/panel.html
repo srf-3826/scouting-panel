@@ -4,207 +4,230 @@ layout: default
 ---
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRF Scouting Panel</title>
-    <style>
-        :root {
-            --bg-color: #f4f7f9;
-            --container-bg: #ffffff;
-            --text-color: #333;
-            --primary-color: #007bff;
-            --border-color: #e2e8f0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRF Scouting Panel</title>
+  <style>
+    :root {
+      --bg-color: #f4f7f9;
+      --container-bg: #ffffff;
+      --text-color: #333;
+      --primary-color: #007bff;
+      --border-color: #e2e8f0;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            color: var(--text-color);
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: var(--text-color);
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 30px;
-            background-color: var(--container-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: var(--container-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 2em;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-        }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 10px;
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-        .form-field {
-            display: flex;
-            flex-direction: column;
-        }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+    }
 
-        label {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
 
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
 
-        input[type="checkbox"] {
-            transform: scale(1.2);
-            margin-top: 8px;
-        }
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-top: 8px;
+    }
 
-        button {
-            padding: 12px 20px;
-            font-size: 1em;
-            font-weight: 600;
-            color: #fff;
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    button {
+      padding: 12px 20px;
+      font-size: 1em;
+      font-weight: 600;
+      color: #fff;
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    button:hover {
+      background-color: #0056b3;
+    }
 
-        .status-message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-            display: none; /* Initially hidden */
-        }
+    .status-message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      display: none;
+      /* Initially hidden */
+    }
 
-        .status-message.success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .status-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-    </style>
+    .status-message.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>SRF Scouting Panel</h1>
-        <form id="scoutingForm">
-            <div class="form-field">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-field">
-                <label for="scoutNotes">Scout Notes</label>
-                <textarea id="scoutNotes" name="scoutNotes" rows="4"></textarea>
-            </div>
+  <div class="container">
+    <h1>SRF Scouting Panel</h1>
+    <form id="scoutingForm">
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
 
-            <div class="form-field">
-                <label for="pointsScored">Points Scored</label>
-                <input type="number" id="pointsScored" name="pointsScored">
-            </div>
-            
-            <div class="form-field">
-                <label for="teamFoul">Team Foul</label>
-                <div>
-                    <input type="checkbox" id="teamFoul" name="teamFoul">
-                    <label for="teamFoul">Check if a foul occurred.</label>
-                </div>
-            </div>
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input type="text" id="password" name="password" required>
+      </div>
 
-            <button type="submit">Submit Data</button>
-            <div id="statusMessage" class="status-message"></div>
-        </form>
-    </div>
+      <div class="form-field">
+        <label for="teamName">Team Name</label>
+        <input type="text" id="teamName" name="teamName" required>
+      </div>
 
-    <script>
-        const form = document.getElementById('scoutingForm');
-        const statusMessage = document.getElementById('statusMessage');
+      <div class="form-field">
+        <label for="scoutNotes">Scout Notes</label>
+        <textarea id="scoutNotes" name="scoutNotes" rows="4"></textarea>
+      </div>
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+      <div class="form-field">
+        <label for="pointsScored">Points Scored</label>
+        <input type="number" id="pointsScored" name="pointsScored">
+      </div>
 
-            // Gather and format form data into the new JSON structure
-            const formData = {
-                user: "passhash",
-                set: 3826,
-                fields: {
-                    name: {
-                        type: "text",
-                        value: document.getElementById('name').value
-                    },
-                    scoutNotes: {
-                        type: "text",
-                        value: document.getElementById('scoutNotes').value
-                    },
-                    pointsScored: {
-                        type: "number",
-                        value: parseInt(document.getElementById('pointsScored').value) || 0
-                    },
-                    teamFoul: {
-                        type: "bool",
-                        value: document.getElementById('teamFoul').checked
-                    }
-                }
-            };
+      <div class="form-field">
+        <label for="teamFoul">Team Foul</label>
+        <div>
+          <input type="checkbox" id="teamFoul" name="teamFoul">
+          <label for="teamFoul">Check if a foul occurred.</label>
+        </div>
+      </div>
 
-            try {
-                const response = await fetch("https://publicactiontrigger.azurewebsites.net/api/dispatches/srf-3826/scouting-panel", {
-                    method: 'POST',
-                    mode: 'cors',
-                    body: JSON.stringify({
-                        event_type: 'scouting_data',
-                        client_payload: {
-                            data: JSON.stringify(formData)
-                        }
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+      <button type="submit">Submit Data</button>
+      <div id="statusMessage" class="status-message"></div>
+    </form>
+  </div>
 
-                if (response.ok) {
-                    showStatusMessage('Data submitted successfully!', 'success');
-                    form.reset(); // Clear the form on success
-                } else {
-                    showStatusMessage(`Error submitting data: ${response.statusText}`, 'error');
-                }
-            } catch (error) {
-                showStatusMessage(`Failed to send request: ${error}`, 'error');
-                console.error('Fetch error:', error);
+  <script>
+    async function hashStringSHA256(inputString) {
+      const textEncoder = new TextEncoder();
+      const data = textEncoder.encode(inputString);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hexHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hexHash;
+    }
+    const form = document.getElementById('scoutingForm');
+    const statusMessage = document.getElementById('statusMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Gather and format form data into the new JSON structure
+      const formData = {
+        user: document.getElementById('name').value,
+        passhash: hashStringSHA256(document.getElementById('password').value),
+        set: document.getElementById('teamNumber'),
+        fields: {
+          name: {
+            type: "text",
+            value: document.getElementById('teamName').value
+          },
+          scoutNotes: {
+            type: "text",
+            value: document.getElementById('scoutNotes').value
+          },
+          pointsScored: {
+            type: "number",
+            value: parseInt(document.getElementById('pointsScored').value) || 0
+          },
+          teamFoul: {
+            type: "bool",
+            value: document.getElementById('teamFoul').checked
+          }
+        }
+      };
+
+      try {
+        const response = await fetch("https://publicactiontrigger.azurewebsites.net/api/dispatches/srf-3826/scouting-panel", {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            event_type: 'scouting_data',
+            client_payload: {
+              data: JSON.stringify(formData)
             }
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
 
-        function showStatusMessage(message, type) {
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message ${type}`;
-            statusMessage.style.display = 'block';
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 5000); // Hide message after 5 seconds
+        if (response.ok) {
+          showStatusMessage('Data submitted successfully!', 'success');
+          form.reset(); // Clear the form on success
+        } else {
+          showStatusMessage(`Error submitting data: ${response.statusText}`, 'error');
         }
-    </script>
+      } catch (error) {
+        showStatusMessage(`Failed to send request: ${error}`, 'error');
+        console.error('Fetch error:', error);
+      }
+    });
+
+    function showStatusMessage(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message ${type}`;
+      statusMessage.style.display = 'block';
+      setTimeout(() => {
+        statusMessage.style.display = 'none';
+      }, 5000); // Hide message after 5 seconds
+    }
+  </script>
 </body>
+
 </html>
