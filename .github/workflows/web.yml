@@ -14,7 +14,6 @@ jobs:
         id: authenticate
         env:
           PAYLOAD_USER_DATA: ${{ github.event.client_payload.data.user }}
-          API_USER_SECRET: ${{ secrets.API_USER_AUTH }}
         run: |
           # The secret stores a JSON string like '{"username": "passhash"}'
           # We need to parse both the payload and the secret to compare
